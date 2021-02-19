@@ -1,13 +1,14 @@
 import Server from './server'
-console.log(process.env.NODE_ENV)
+import { getVehicleById, searchVehicles, vehiclePagination } from './controllers'
+
 const serve = new Server(3900)
 
 serve.addNewType(`
 type Query {
     createVehicle(vehicleInfo: VehicleInfo!): Vehicle
     getVehicleById(id: String!): Vehicle
-    getVehiclesPagination(offset: Int!, limit: Int!): [Vehicle]
-    searchVehicle(term: String!): [Vehicle]
+    getVehiclesPagination(skip: Int!, limit: Int!): [Vehicle]
+    searchVehicle(term: String!, limit: Int!, skip: Int!): [Vehicle]
 }
 type Mutation {
     editVehicle(vehicleInfo: VehicleInfo!, id: String!): Vehicle
@@ -15,13 +16,13 @@ type Mutation {
 }
 input VehicleInfo {
     make: String
-    model: String
+    vehicleModel: String
     year: String
 }
 type Vehicle {
     _id: String
     make: String
-    model: String
+    vehicleModel: String
     year: String
 }
 `)
@@ -29,28 +30,27 @@ type Vehicle {
 serve.addNewResolver({
   /*Subscription: {},*/
   Query: {
+    searchVehicle: (_, args) => {
+        const { term, skip, limit } = args
+
+        return searchVehicles(term, limit, skip).then((data) => {
+            return data
+        })
+    },
     createVehicle: (_, args) => {
         return { id: 1, name: args.movieInfo.name }
     },
     getVehicleById: (_, args) => {
-        return { id: args.id, name: 'Terminator' }
+        const id = args.id
+
+        return getVehicleById(id)
     },
     getVehiclesPagination: (_, args) => {
-        console.log(args)
-        return [
-            {
-                id: 1,
-                name: 'Terminator'
-            },
-            {
-                id: 2,
-                name: 'Terminator 2'
-            },
-            {
-                id: 3,
-                name: 'Terminator 3'
-            }
-        ]
+        const { limit, skip } = args
+
+        return vehiclePagination(limit, skip).then((data) => {
+            return data
+        })
     }
   },
   Mutation: {
