@@ -40,7 +40,7 @@ class Server {
         }
 
         this.server = new ApolloServer({
-          cors: process.env.NODE_ENV === 'production' ? corsOptions : false,
+          cors: process.env.NODE_ENV === 'production' ? corsOptions : null,
           typeDefs: this.typeDefs,
           resolvers: this.resolvers,
           playground: true,

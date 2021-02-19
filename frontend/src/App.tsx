@@ -4,14 +4,17 @@ import { useQuery , gql } from '@apollo/client';
 const GET_VEHICLE = gql`
 	query GetVehicleById($id: String!) {
 	  getVehicleById(id: $id) {
-		make
+      _id
+      vehicleModel
+      year
+      make
 	}
 	}
 `;
 
 interface Vehicle {
   id: string;
-  model: string;
+  vehicleModel: string;
   year: string;
   make: string;
 }
@@ -28,7 +31,7 @@ console.log(process.env.NODE_ENV)
 
 export default function App()
 {
-    const { loading, data } = useQuery<VehicleData, VehicleVars>(GET_VEHICLE, { variables: {id: '1'} });
+    const { loading, data } = useQuery<VehicleData, VehicleVars>(GET_VEHICLE, { variables: {id: '5ef8e95b14ec08001db69f60'} });
 
 console.log(data); 
     return <h1>Hello, world!</h1>

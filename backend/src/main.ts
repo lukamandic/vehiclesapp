@@ -2,6 +2,7 @@ import Server from './server'
 import { getVehicleById, searchVehicles, vehiclePagination } from './controllers'
 
 const serve = new Server(3900)
+console.log(process.env.NODE_ENV)
 
 serve.addNewType(`
 type Query {
