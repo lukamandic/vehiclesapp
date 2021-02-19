@@ -28,7 +28,7 @@ class Server {
     }
   
     initializeServer() {
-        var whitelist = ['vehicles.structika.com', 'vehiclesbackend.structika.com']
+        var whitelist = ['https://vehicles.structika.com', 'https://vehiclesbackend.structika.com']
         var corsOptions = {
           origin: function (origin, callback) {
             if (whitelist.indexOf(origin) !== -1) {
