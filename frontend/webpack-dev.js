@@ -8,6 +8,16 @@ module.exports = {
     entry: {
         app: path.join(__dirname, 'index.tsx')
     },
+    devtool: 'inline-source-map',
+    devServer: {
+        open: true,
+        port: 3011,   
+        watchOptions:{
+            poll: true,
+            ignored: "/node_modules/"
+        }
+        
+    },
     target: 'web',
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
@@ -21,10 +31,6 @@ module.exports = {
             }
         ],
     },
-    output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
-    },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src', 'index.html')
@@ -35,6 +41,10 @@ module.exports = {
         new CleanWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
-    watch: true
+    output: {
+        filename: '[name].js',
+        path: path.resolve(__dirname, 'dist')
+    },
+
 }
 
