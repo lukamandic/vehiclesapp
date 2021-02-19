@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.production.js",
-    "dev": "NODE_ENV=development webpack --config webpack.development.js",
+    "dev": "NODE_ENV=development nodemon src/main.ts",
     "start": "node dist/server"
   },
   "keywords": [],
@@ -24,6 +24,9 @@
   },
   "dependencies": {
     "apollo-server": "^2.18.2",
-    "mongoose": "^5.11.16"
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.16",
+    "ts-node": "^9.1.1"
   }
 }

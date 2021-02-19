@@ -1,5 +1,5 @@
 import Server from './server'
-
+console.log(process.env.NODE_ENV)
 const serve = new Server(3900)
 
 serve.addNewType(`

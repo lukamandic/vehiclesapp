@@ -3,6 +3,7 @@ import { ApolloServer, PubSub} from 'apollo-server'
 class Server {
     private port
     public server
+    public app
     private typeDefs
     private resolvers
     public pubsub
@@ -27,7 +28,19 @@ class Server {
     }
   
     initializeServer() {
+        var whitelist = ['vehicles.structika.com', 'vehiclesbackend.structika.com']
+        var corsOptions = {
+          origin: function (origin, callback) {
+            if (whitelist.indexOf(origin) !== -1) {
+              callback(null, true)
+            } else {
+              callback(new Error('Not allowed by CORS'))
+            }
+          }
+        }
+
         this.server = new ApolloServer({
+          cors: process.env.NODE_ENV === 'production' ? corsOptions : false,
           typeDefs: this.typeDefs,
           resolvers: this.resolvers,
           playground: true,
